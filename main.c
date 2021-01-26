@@ -35,7 +35,7 @@ int check_if_ended(int (*gr)[10], int nb) {
 int init(int (*gr)[10], int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
-            gr[i][j] = 1;
+            gr[i][j] = -1;
         }
     }
 }
