@@ -35,7 +35,7 @@ int check_if_ended(int (*gr)[10], int nb) {
 int init(int (*gr)[10], int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
-            gr[i][j] = -1;
+            gr[i][j] = 1;
         }
     }
 }
@@ -228,12 +228,6 @@ void game(int (*gr)[10], int player) {
     printGrille(gr, player);
 
     int* dices = fullRoll(5);
-    // int* dices = malloc(sizeof(int)*5);
-    // dices[0] = 2;
-    // dices[1] = 6;
-    // dices[2] = 2;
-    // dices[3] = 2;
-    // dices[4] = 2;
 
     int nbLancer = 1;
     int done = 0;
@@ -296,6 +290,15 @@ int choseNumOfPlayer(){
         }
     } while(nb < 1 || nb > 10);
     return nb;
+}
+
+void writeToFIle(int nbJoueurs) {
+    int written = 0;
+    FILE* rep = fopen("test.txt", "wb");
+    for (int i = 0; i < nbJoueurs; i++) {
+
+    }
+    fclose(rep);
 }
 
 int main() {
