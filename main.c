@@ -294,11 +294,25 @@ int choseNumOfPlayer(){
     return nb;
 }
 
-void writeToFIle(int nbJoueurs) {
+void writeToFile(int nbJoueurs) {
     int written = 0;
-    FILE* rep = fopen("test.txt", "wb");
-    for (int i = 0; i < nbJoueurs; i++) {
+    FILE* rep = fopen("resultats.txt", "a+");
+    fprintf(rep, "\n=========================================\n");
+    fprintf(rep,"\t\t Nouvelle Partie\n");
+    fprintf(rep, "=========================================\n");
+    for (int player = 0; player < nbJoueurs; player++) {
+        fprintf(rep, "JOUEUR %d\n", player+1);
 
+        for (int i = 0; i < 13; i++) {
+            fprintf(rep, "%s\t: %d\n", corres[i], gr[i][player]);
+        }
+
+        int* tot = totalScore(player);
+
+        fprintf(rep, "\nScore Total : %d (+%d)\n", tot[0], tot[1]);
+        if (player + 1 != nbJoueurs) {
+            fprintf(rep, "\n==========================================\n");
+        }
     }
     fclose(rep);
 }
@@ -317,6 +331,13 @@ int main() {
     printf("\n================== Scores Total ==================\n\n");
     for (int i = 0; i < nb; i++) {
         printGrille(i);
+    }
+    char write;
+    printf("Voulez vous enregistrer les résultats dans un fichier (Y/n) ? \n");
+    scanf(" %c", &write);
+    if (write == 'y' || write == 'Y') {
+        printf("Enregistrement dans le fichier 'resultats.txt'");
+        writeToFile(nb);
     }
     return 0;
 }
