@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+int gr[13][10];
+
 char corres [13][50] = {
     "Somme des 1 ",
     "Somme des 2 ",
@@ -19,7 +21,7 @@ char corres [13][50] = {
     "Chance      "
 };
 
-int check_if_ended(int (*gr)[10], int nb) {
+int check_if_ended(int nb) {
 
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
@@ -32,7 +34,7 @@ int check_if_ended(int (*gr)[10], int nb) {
     return 1;
 }
 
-int init(int (*gr)[10], int nb) {
+int init(int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
             gr[i][j] = -1;
@@ -40,7 +42,7 @@ int init(int (*gr)[10], int nb) {
     }
 }
 
-int* totalScore(int (*gr)[10], int player) {
+int* totalScore(int player) {
     int tot = 0;
     int* res = malloc(sizeof(int) * 2);
     res[1] = 0;
@@ -57,7 +59,7 @@ int* totalScore(int (*gr)[10], int player) {
     return res;
 }
 
-void printGrille(int (*gr)[10], int player) {
+void printGrille(int player) {
     printf("\n==========================================\n");
     printf("     JOUEUR %d\n", player+1);
     printf("==========================================\n\n");
@@ -75,7 +77,7 @@ void printGrille(int (*gr)[10], int player) {
         bonus = 35;
     }
 
-    int* tot = totalScore(gr, player);
+    int* tot = totalScore( player);
 
     printf("\nScore Total : %d (+%d)\n", tot[0], tot[1]);
     
@@ -200,7 +202,7 @@ int* calculScore(int *rolls) {
     return scores;
 }
 
-int choseResult(int (*gr)[10], int player) {
+int choseResult(int player) {
     printf("================================\n\n");
     int res;
     do {
@@ -214,7 +216,7 @@ int choseResult(int (*gr)[10], int player) {
     return res;
 }
 
-void printPossibleScores(int* scores, int (*gr)[10], int player) {
+void printPossibleScores(int* scores, int player) {
     printf("\nScores Possibles:\n");
     printf("================================\n");
     for (int i = 0; i < 13; i++) {
@@ -224,8 +226,8 @@ void printPossibleScores(int* scores, int (*gr)[10], int player) {
     }
 }
 
-void game(int (*gr)[10], int player) {
-    printGrille(gr, player);
+void game(int player) {
+    printGrille( player);
 
     int* dices = fullRoll(5);
     // int* dices = malloc(sizeof(int)*5);
@@ -279,9 +281,9 @@ void game(int (*gr)[10], int player) {
 
     int* scores = calculScore(dices);
 
-    printPossibleScores(scores, gr, player);
+    printPossibleScores(scores, player);
 
-    int res = choseResult(gr, player);
+    int res = choseResult(player);
 
     gr[res-1][player] = scores[res-1];
 }
@@ -299,20 +301,19 @@ int choseNumOfPlayer(){
 }
 
 int main() {
-    int grille[13][10];
+    
     int nb = choseNumOfPlayer();
-    init(grille, nb);
+    init(nb);
     int turn = 0;
-    while (check_if_ended(grille, nb) != 1) {
+    while (check_if_ended(nb) != 1) {
         int player = turn % nb;
-        
-        game(grille, player);
+        game(player);
 
         turn ++;
     }
     printf("\n================== Scores Total ==================\n\n");
     for (int i = 0; i < nb; i++) {
-        printGrille(grille, i);
+        printGrille(i);
     }
     return 0;
 }
