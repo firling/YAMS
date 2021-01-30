@@ -271,7 +271,7 @@ void game(int player,Joueur* premierJoueur) {
     }
 
     while (done == 0 && nbLancer < 3) {
-        printf("Relancer les des ? Choisissez les numero des des a changer separe par des virgules. \nEnter c sinon : ");
+        printf("Relancer les des ? Choisissez les numeros des des a changer separe par des virgules. \nEnter c sinon : ");
         char changeDice[20];
         scanf("%s", changeDice);
 
@@ -317,9 +317,9 @@ void game(int player,Joueur* premierJoueur) {
 int choseNumOfPlayer(){
     int nb;
     do {
-        printf("Choisissez le nombre de joueur souhaite (max: 10) : ");
+        printf("Choisissez le nombre de joueurs souhaite (max: 10) : ");
         scanf("%d", &nb);
-        if (nb < 1 || nb > 10) {
+        if (nb < 1 || nb > 10) {    
             printf("Mauvaise entree.\n\n");
             getchar();
         }
