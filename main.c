@@ -37,7 +37,7 @@ int check_if_ended(int nb) {
 int init(int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
-            gr[i][j] = 1;
+            gr[i][j] = -1;
         }
     }
 }
@@ -212,7 +212,21 @@ int choseResult(int player) {
             printf("Mauvaise entree.\n");
         }
     } while (res < 1 || res > 13 || gr[res-1][player] != -1);
-
+    switch(res) {
+        case 1: printf("Vous avez choisi la Somme des 1!\n"); break;
+        case 2: printf("Vous avez choisi la Somme des 2!\n"); break;
+        case 3: printf("Vous avez choisi la Somme des 3!\n"); break;
+        case 4: printf("Vous avez choisi la Somme des 4!\n"); break;
+        case 5: printf("Vous avez choisi la Somme des 5!\n"); break;
+        case 6: printf("Vous avez choisi la Somme des 6!\n"); break;
+        case 7: printf("Vous avez choisi le Brelan!\n"); break;
+        case 8: printf("Vous avez choisi le Full!\n"); break;
+        case 9: printf("Vous avez choisi la Petite Suite!\n"); break;
+        case 10: printf("Vous avez choisi la Grande SUite!\n"); break;
+        case 11: printf("Vous avez choisi le Carre!\n"); break;
+        case 12: printf("Vous avez choisi le Yams!\n"); break;
+        case 13: printf("Vous avez choisi la Chance!\n"); break;
+    }
     return res;
 }
 
