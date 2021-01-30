@@ -5,7 +5,7 @@
 
 int gr[13][10];
 
-char corres [13][50] = {
+char correspondance [13][50] = {
     "Somme des 1 ",
     "Somme des 2 ",
     "Somme des 3 ",
@@ -66,9 +66,9 @@ void printGrille(int player) {
 
     for (int i = 0; i < 13; i++) {
         if (gr[i][player] > -1) {
-            printf("%s\t: %d\n", corres[i], gr[i][player]);
+            printf("%s\t: %d\n", correspondance[i], gr[i][player]);
         } else {
-            printf("%s\t: \n", corres[i]);
+            printf("%s\t: \n", correspondance[i]);
         }
     }
 
@@ -95,10 +95,8 @@ int* fullRoll(int nbDice){
 
     time_t t;
        
-    /* Intializes random number generator */
     srand((unsigned) time(&t));
 
-    /* Print 5 random numbers from 1 to 6 */
     for( int i = 0 ; i < nbDice ; i++ ) {
         rolls[i] = rand() % 6 + 1;
     }
@@ -155,7 +153,7 @@ int* calculScore(int *rolls) {
         }
     }
 
-    /* Carré */
+    /* Carre */
     scores[10] = 0;
     for (int i = 0; i<6; i++) {
         if(occurences[i] >= 4) {
@@ -235,7 +233,7 @@ void printPossibleScores(int* scores, int player) {
     printf("================================\n");
     for (int i = 0; i < 13; i++) {
         if (gr[i][player] == -1) {
-            printf("[%d] => %s: %d\n", i+1, corres[i], scores[i]);
+            printf("[%d] => %s: %d\n", i+1, correspondance[i], scores[i]);
         }
     }
 }
@@ -275,7 +273,7 @@ void game(int player) {
             i++;
         }
 
-        printf("\nNouveau Dés\n");
+        printf("\nNouveau Des\n");
         printf("================================\n");
 
         for(int i = 0; i < 5; i++) {
@@ -303,6 +301,7 @@ int choseNumOfPlayer(){
         scanf("%d", &nb);
         if (nb < 1 || nb > 10) {
             printf("Mauvaise entree.\n\n");
+            getchar();
         }
     } while(nb < 1 || nb > 10);
     return nb;
@@ -318,7 +317,7 @@ void writeToFile(int nbJoueurs) {
         fprintf(rep, "JOUEUR %d\n", player+1);
 
         for (int i = 0; i < 13; i++) {
-            fprintf(rep, "%s\t: %d\n", corres[i], gr[i][player]);
+            fprintf(rep, "%s\t: %d\n", correspondance[i], gr[i][player]);
         }
 
         int* tot = totalScore(player);
@@ -347,7 +346,7 @@ int main() {
         printGrille(i);
     }
     char write;
-    printf("Voulez vous enregistrer les résultats dans un fichier (Y/n) ? \n");
+    printf("Voulez vous enregistrer les resultats dans un fichier (Y/n) ? \n");
     scanf(" %c", &write);
     if (write == 'y' || write == 'Y') {
         printf("Enregistrement dans le fichier 'resultats.txt'");
