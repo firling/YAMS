@@ -48,7 +48,7 @@ int check_if_ended(int nb) {
 int init(int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
-            gr[i][j] = 1;
+            gr[i][j] = -1;
         }
     }
 }
