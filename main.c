@@ -70,9 +70,18 @@ int* totalScore(int player) {
     return res;
 }
 
-void printGrille(int player) {
+char * getNomJoueur(Joueur* premierJoueur,int nb){
+    Joueur* joueurSelect = premierJoueur;
+    for (int i = 0; i < nb-1; i++)
+    {
+        joueurSelect = joueurSelect->suivant;
+    }
+    return joueurSelect->nom;
+}
+
+void printGrille(int player,Joueur* premierJoueur) {
     printf("\n==========================================\n");
-    printf("     JOUEUR %d\n", player+1);
+    printf("     JOUEUR %s\n", getNomJoueur(premierJoueur,player+1));
     printf("==========================================\n\n");
 
     for (int i = 0; i < 13; i++) {
@@ -249,8 +258,8 @@ void printPossibleScores(int* scores, int player) {
     }
 }
 
-void game(int player) {
-    printGrille( player);
+void game(int player,Joueur* premierJoueur) {
+    printGrille( player,premierJoueur);
 
     int* dices = fullRoll(5);
 
@@ -341,7 +350,7 @@ void writeToFile(int nbJoueurs) {
     fclose(rep);
 }
 
-void namePlayer(int nb) {
+Joueur* namePlayer(int nb) {
     Joueur* premierJoueur = malloc(sizeof(Joueur));
     Joueur* JoueurSelect = premierJoueur;
 
@@ -350,8 +359,8 @@ void namePlayer(int nb) {
 
         char* temp = malloc(sizeof(char) * 128);
         scanf("%s", temp);
+        JoueurSelect->nom = malloc(sizeof(char) * strlen(temp));
         strcpy(JoueurSelect->nom, temp);
-        printf("%s\n", JoueurSelect->nom);
 
         if (i != nb){
             Joueur* nouveauJoueur = malloc(sizeof(Joueur));
@@ -359,6 +368,8 @@ void namePlayer(int nb) {
             JoueurSelect = JoueurSelect->suivant;
         }
     }
+
+    return premierJoueur;
 }
 
 int main() {
@@ -366,18 +377,17 @@ int main() {
     int nb = choseNumOfPlayer();
     init(nb);
     int turn = 0;
-
-    namePlayer(nb);
-
+    Joueur* premierJoueur = malloc(sizeof(Joueur));
+    premierJoueur = namePlayer(nb);
     while (check_if_ended(nb) != 1) {
         int player = turn % nb;
-        game(player);
+        game(player,premierJoueur);
 
         turn ++;
     }
     printf("\n================== Scores Total ==================\n\n");
     for (int i = 0; i < nb; i++) {
-        printGrille(i);
+        printGrille(i,premierJoueur);
     }
     char write;
     printf("Voulez vous enregistrer les resultats dans un fichier (Y/n) ? \n");
