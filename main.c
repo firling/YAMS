@@ -5,9 +5,6 @@
 
 int gr[13][10];
 
-<<<<<<< HEAD
-char correspondance [13][50] = {
-=======
 typedef struct Joueur Joueur;
 struct Joueur{
     char * nom;
@@ -19,8 +16,7 @@ void insertion(Joueur *joueur){
 
 }
 
-char corres [13][50] = {
->>>>>>> b46a19ede3a53a7fc4d09b6fc9c67ac141e1a98b
+char correspondance [13][50] = {
     "Somme des 1 ",
     "Somme des 2 ",
     "Somme des 3 ",
@@ -345,34 +341,33 @@ void writeToFile(int nbJoueurs) {
     fclose(rep);
 }
 
-int main() {
-    
-    int nb = choseNumOfPlayer();
-    init(nb);
-    int turn = 0;
-    
-    Joueur* premierJoueur;
+void namePlayer(int nb) {
+    Joueur* premierJoueur = malloc(sizeof(Joueur));
     Joueur* JoueurSelect = premierJoueur;
 
     for (int i = 0; i<nb; i++){
         printf("\nVeuillez entrer le nom du joueur %d : ",i+1);
 
-        char *temp;
-        temp = malloc(128);
-        scanf(" %s",temp);
-        JoueurSelect->nom = temp;
-        printf("%s",JoueurSelect->nom);
-        printf("\nnb : %d\ni : %d\n",nb,i);
+        char* temp = malloc(sizeof(char) * 128);
+        scanf("%s", temp);
+        strcpy(JoueurSelect->nom, temp);
+        printf("%s\n", JoueurSelect->nom);
 
-        if (i!= nb){
-            Joueur* nouveauJoueur;
+        if (i != nb){
+            Joueur* nouveauJoueur = malloc(sizeof(Joueur));
             JoueurSelect->suivant = nouveauJoueur;
             JoueurSelect = JoueurSelect->suivant;
         }
-        
-        free(temp);
     }
+}
 
+int main() {
+    
+    int nb = choseNumOfPlayer();
+    init(nb);
+    int turn = 0;
+
+    namePlayer(nb);
 
     while (check_if_ended(nb) != 1) {
         int player = turn % nb;
