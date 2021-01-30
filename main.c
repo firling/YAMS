@@ -48,7 +48,7 @@ int check_if_ended(int nb) {
 int init(int nb) {
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < nb; j++) {
-            gr[i][j] = -1;
+            gr[i][j] = 1;
         }
     }
 }
@@ -327,14 +327,14 @@ int choseNumOfPlayer(){
     return nb;
 }
 
-void writeToFile(int nbJoueurs) {
+void writeToFile(int nbJoueurs, Joueur* premierJoueur) {
     int written = 0;
     FILE* rep = fopen("resultats.txt", "a+");
     fprintf(rep, "\n=========================================\n");
     fprintf(rep,"\t\t Nouvelle Partie\n");
     fprintf(rep, "=========================================\n");
     for (int player = 0; player < nbJoueurs; player++) {
-        fprintf(rep, "JOUEUR %d\n", player+1);
+        fprintf(rep, "JOUEUR %s\n", getNomJoueur(premierJoueur,player+1));
 
         for (int i = 0; i < 13; i++) {
             fprintf(rep, "%s\t: %d\n", correspondance[i], gr[i][player]);
@@ -394,7 +394,7 @@ int main() {
     scanf(" %c", &write);
     if (write == 'y' || write == 'Y') {
         printf("Enregistrement dans le fichier 'resultats.txt'");
-        writeToFile(nb);
+        writeToFile(nb, premierJoueur);
     }
     return 0;
 }
