@@ -5,6 +5,17 @@
 
 int gr[13][10];
 
+typedef struct Joueur Joueur;
+struct Joueur{
+    char * nom;
+    Joueur* suivant;
+};
+
+
+void insertion(Joueur *joueur){
+
+}
+
 char corres [13][50] = {
     "Somme des 1 ",
     "Somme des 2 ",
@@ -305,6 +316,30 @@ int main() {
     int nb = choseNumOfPlayer();
     init(nb);
     int turn = 0;
+    
+    Joueur* premierJoueur;
+    Joueur* JoueurSelect = premierJoueur;
+
+    for (int i = 0; i<nb; i++){
+        printf("\nVeuillez entrer le nom du joueur %d : ",i+1);
+
+        char *temp;
+        temp = malloc(128);
+        scanf(" %s",temp);
+        JoueurSelect->nom = temp;
+        printf("%s",JoueurSelect->nom);
+        printf("\nnb : %d\ni : %d\n",nb,i);
+
+        if (i!= nb){
+            Joueur* nouveauJoueur;
+            JoueurSelect->suivant = nouveauJoueur;
+            JoueurSelect = JoueurSelect->suivant;
+        }
+        
+        free(temp);
+    }
+
+
     while (check_if_ended(nb) != 1) {
         int player = turn % nb;
         game(player);
